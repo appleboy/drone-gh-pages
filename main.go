@@ -89,6 +89,11 @@ func main() {
 			Usage:  "netrc password",
 			EnvVar: "PLUGIN_PASSWORD,DRONE_NETRC_PASSWORD,GH_PAGES_PASSWORD,GITHUB_PASSWORD",
 		},
+		cli.StringSliceFlag{
+			Name:   "rsync.exclude",
+			Usage:  "exclude files matching PATTERN",
+			EnvVar: "PLUGIN_EXCLUDE,RSYNC_EXCLUDE",
+		},
 	}
 
 	if err := app.Run(os.Args); err != nil {
@@ -125,6 +130,7 @@ func run(c *cli.Context) error {
 			TemporaryBase:   c.String("temporary-base"),
 			PagesDirectory:  c.String("pages-directory"),
 			TargetDirectory: c.String("target-directory"),
+			ExcludeList:     c.StringSlice("rsync.exclude"),
 		},
 	}
 

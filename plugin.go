@@ -44,6 +44,7 @@ type (
 		PagesDirectory  string
 		WorkDirectory   string
 		TargetDirectory string
+		ExcludeList     []string
 	}
 
 	Plugin struct {
@@ -135,18 +136,28 @@ func (p Plugin) cloneTarget() error {
 }
 
 func (p Plugin) rsyncPages() error {
-	cmd := exec.Command(
-		"rsync",
+	args := []string{
 		"-av",
 		"--delete",
 		"--exclude",
 		".git",
 		"--exclude",
 		"CNAME",
+	}
+	if len(p.Config.ExcludeList) > 0 {
+		for _, row := range p.Config.ExcludeList {
+			args = append(args, "--exclude", row)
+		}
+	}
+
+	args = append(
+		args,
 		"-r",
 		strings.TrimRight(p.Config.PagesDirectory, "/")+"/",
 		path.Join(p.Config.WorkDirectory, p.Config.TargetDirectory),
 	)
+
+	cmd := exec.Command("rsync", args...)
 
 	cmd.Dir = p.Build.Path
 	return runCommand(cmd)
