@@ -62,7 +62,7 @@ local golang_image(os, version) =
     local file_suffix = std.strReplace(tag, '-', '.');
     local volumes = if is_windows then [{ name: windows_pipe_volume, path: windows_pipe }] else [];
     local golang = golang_image(os, version);
-    local plugin_repo = 'plugins/' + std.splitLimit(name, '-', 1)[1];
+    local plugin_repo = 'appleboy/' + std.splitLimit(name, '-', 1)[1];
     local extension = if is_windows then '.exe' else '';
     {
       kind: 'pipeline',
@@ -183,14 +183,6 @@ local golang_image(os, version) =
             spec: 'docker/manifest.tmpl',
             ignore_missing: true,
             auto_tag: true,
-          },
-        },
-        {
-          name: 'microbadger',
-          image: 'plugins/webhook',
-          pull: 'always',
-          settings: {
-            urls: { from_secret: 'microbadger_url' },
           },
         },
       ],

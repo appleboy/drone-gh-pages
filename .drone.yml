@@ -88,7 +88,7 @@ steps:
     dry_run: true
     password:
       from_secret: docker_password
-    repo: plugins/gh-pages
+    repo: appleboy/gh-pages
     tags: linux-amd64
     username:
       from_secret: docker_username
@@ -106,7 +106,7 @@ steps:
     dockerfile: docker/Dockerfile.linux.amd64
     password:
       from_secret: docker_password
-    repo: plugins/gh-pages
+    repo: appleboy/gh-pages
     username:
       from_secret: docker_username
   when:
@@ -172,7 +172,7 @@ steps:
     dry_run: true
     password:
       from_secret: docker_password
-    repo: plugins/gh-pages
+    repo: appleboy/gh-pages
     tags: linux-arm64
     username:
       from_secret: docker_username
@@ -190,7 +190,7 @@ steps:
     dockerfile: docker/Dockerfile.linux.arm64
     password:
       from_secret: docker_password
-    repo: plugins/gh-pages
+    repo: appleboy/gh-pages
     username:
       from_secret: docker_username
   when:
@@ -256,7 +256,7 @@ steps:
     dry_run: true
     password:
       from_secret: docker_password
-    repo: plugins/gh-pages
+    repo: appleboy/gh-pages
     tags: linux-arm
     username:
       from_secret: docker_username
@@ -274,7 +274,7 @@ steps:
     dockerfile: docker/Dockerfile.linux.arm
     password:
       from_secret: docker_password
-    repo: plugins/gh-pages
+    repo: appleboy/gh-pages
     username:
       from_secret: docker_username
   when:
@@ -311,13 +311,6 @@ steps:
     spec: docker/manifest.tmpl
     username:
       from_secret: docker_username
-
-- name: microbadger
-  pull: always
-  image: plugins/webhook
-  settings:
-    urls:
-      from_secret: microbadger_url
 
 trigger:
   ref:
